@@ -1,0 +1,8 @@
+[build]
+  command = "pnpm build"
+
+[context.deploy-preview]
+  command = "npx prisma generate && pnpm push --accept-data-loss --force-reset && pnpm seed && pnpm run build"
+
+[context.production]
+  command = "npx prisma generate && npx prisma migrate deploy && pnpm run build"

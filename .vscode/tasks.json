@@ -1,0 +1,38 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Docker Compose Up (Postgres)",
+      "type": "shell",
+      "command": "docker-compose",
+      "args": [
+        "-f",
+        ".docker/postgresql.yaml",
+        "up",
+        "-d"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Docker Compose Down (Postgres)",
+      "type": "shell",
+      "command": "docker-compose",
+      "args": [
+        "-f",
+        ".docker/postgresql.yaml",
+        "stop"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

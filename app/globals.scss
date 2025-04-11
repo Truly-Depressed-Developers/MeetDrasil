@@ -1,0 +1,74 @@
+@use "tailwindcss/base";
+@use "tailwindcss/components";
+@use "tailwindcss/utilities";
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --error-alert: 360 88% 97%;
+    --error-alert-foreground: 357.18 100% 45%;
+    --success-alert: 138.46 77% 97%;
+    --success-alert-foreground: 142.31 100% 33%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --ring: 0 0% 3.9%;
+    --radius: 0.5rem;
+    --success: 142.1 70.6% 45.3%;
+    --success-foreground: 0 0% 98%;
+    --info: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --error-alert: 358.8 69% 30%/0.3;
+    --error-alert-foreground: 358.75 100% 70%;
+    --success-alert: 145.73 73% 19%/0.3;
+    --success-alert-foreground: 150.06 96% 45%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --ring: 0 0% 83.1%;
+    --success: 142.1 70.6% 45.3%;
+    --success-foreground: 0 0% 98%;
+    --info: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
