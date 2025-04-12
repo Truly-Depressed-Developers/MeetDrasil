@@ -25,13 +25,17 @@ const HobbyBadgesList = ({ hobbies }: HobbyBadgesListProps) => {
     <div className="flex flex-col gap-4">
       <ul className="flex flex-wrap gap-x-1">
         {hobbies.map((hobby) => (
-          <BadgeWithImage
+          <li
             key={hobby.id}
-            name={hobby.name}
-            imageUrl={hobby.image_url}
-            isActive={selectedHobbies.includes(hobby.id)}
+            className="flex cursor-pointer flex-wrap items-center gap-3 rounded-full px-3 py-2"
             onClick={() => toggleHobby(hobby.id)}
-          />
+          >
+            <BadgeWithImage
+              name={hobby.name}
+              imageUrl={hobby.image_url}
+              isActive={selectedHobbies.includes(hobby.id)}
+            />
+          </li>
         ))}
       </ul>
       <Button>Save and Continue</Button>
