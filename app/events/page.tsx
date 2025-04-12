@@ -12,6 +12,10 @@ const EventPage = async () => {
   const markers = eventData.map((event) => ({
     long: event.longitude,
     lat: event.latitude,
+    content: {
+      name: event.name,
+      date: format(new Date(event.startDate), 'MMM d, yyyy'),
+    },
   }));
 
   return (

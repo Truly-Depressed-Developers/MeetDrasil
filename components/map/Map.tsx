@@ -12,7 +12,7 @@ const Map = ({
 }: {
   long: number;
   lat: number;
-  markers: { long: number; lat: number }[];
+  markers: { long: number; lat: number; content: { name: string; date: string } }[];
 }) => {
   const geoControlRef = useRef<maplibregl.GeolocateControl>(null);
   const mapRef = useRef<MapRef>(null);
@@ -22,7 +22,7 @@ const Map = ({
       initialViewState={{
         longitude: long,
         latitude: lat,
-        zoom: 14,
+        zoom: 10,
       }}
       style={{ width: '100%', height: '100%' }}
       mapStyle={'/map-tiles.json'}
@@ -37,7 +37,7 @@ const Map = ({
         // onGeolocate={handleGeolocate}
       />
       {markers.map((marker, index) => (
-        <Marker key={index} long={marker.long} lat={marker.lat} />
+        <Marker key={index} long={marker.long} lat={marker.lat} content={marker.content} />
       ))}
     </MapComponent>
   );

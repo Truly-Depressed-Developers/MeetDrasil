@@ -1,6 +1,6 @@
-@use "tailwindcss/base";
-@use "tailwindcss/components";
-@use "tailwindcss/utilities";
+@use 'tailwindcss/base';
+@use 'tailwindcss/components';
+@use 'tailwindcss/utilities';
 
 @layer base {
   :root {
@@ -69,6 +69,12 @@
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply bg-background font-sans text-foreground antialiased;
   }
+}
+
+.marker-popup .maplibregl-popup-content {
+  padding: 0 !important;
+  overflow: hidden;
+  border-radius: 8px;
 }
