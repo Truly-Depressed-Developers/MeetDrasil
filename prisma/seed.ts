@@ -40,16 +40,14 @@ async function seedDepartaments() {
 
 async function seedHobbies() {
   const hobbies = [
-    { name: 'Hiking' },
-    { name: 'Photography' },
-    { name: 'Cooking' },
-    { name: 'Gaming' },
-    { name: 'Reading' },
-    { name: 'Dancing' },
-    { name: 'Painting' },
-    { name: 'Swimming' },
-    { name: 'Cycling' },
-    { name: 'Music' },
+    { name: 'Motorization', image: '/icons/car.png' },
+    { name: 'Cinema', image: '/icons/cinema.png' },
+    { name: 'Traveling', image: '/icons/travel.png' },
+    { name: 'Music', image: '/icons/music.png' },
+    { name: 'Gaming', image: '/icons/games.png' },
+    { name: 'Food', image: '/icons/food.png' },
+    { name: 'Sport', image: '/icons/football.png' },
+    { name: 'Technology', image: '/icons/technology.png' },
   ];
 
   return await prisma.hobby.createMany({ data: hobbies });
