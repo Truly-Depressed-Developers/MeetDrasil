@@ -7,6 +7,8 @@ import NavBar from '@/components/layout/NavBar';
 import React from 'react';
 import { Toaster } from '@/components/ui/sonner';
 import { AuthProvider } from '@/components/auth/AuthContext';
+import SidebarProviderWrapper from '@/components/layout/SidebarProviderWrapper';
+import AppSidebar from '@/components/layout/AppSidebar';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -41,9 +43,12 @@ export default function RootLayout({
         >
           <TRPCProvider>
             <AuthProvider>
-              <main className="grow overflow-y-auto">{children}</main>
-              <NavBar />
-              <Toaster position="top-center" />
+              <SidebarProviderWrapper>
+                <NavBar />
+                <main className="grow overflow-y-auto">{children}</main>
+                <Toaster position="top-center" />
+                <AppSidebar />
+              </SidebarProviderWrapper>
             </AuthProvider>
           </TRPCProvider>
         </ThemeProvider>
