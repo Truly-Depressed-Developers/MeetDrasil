@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { procedure, router } from '../init';
+import { procedure, protectedProcedure, router } from '../init';
 import { prisma } from '@/prisma/prisma';
 import { EventDTO, mapEventToDTO } from '@/types/EventDTO';
 
@@ -17,7 +17,7 @@ export const eventRouter = router({
     });
     return event ? mapEventToDTO(event) : null;
   }),
-  create: procedure
+  create: protectedProcedure
     .input(
       z.object({
         name: z.string(),
@@ -30,16 +30,37 @@ export const eventRouter = router({
         minCapacity: z.number(),
         maxCapacity: z.number(),
         price: z.number(),
-        ownerId: z.string(),
         images: z.array(z.string()),
       })
     )
-    .mutation(async ({ input }): Promise<EventDTO> => {
+    .mutation(async ({ input, ctx }): Promise<EventDTO> => {
       const event = await prisma.event.create({
-        data: input,
+        data: { ...input, ownerId: ctx.user.id },
         include: { tags: true, participants: true },
       });
       return mapEventToDTO(event);
+    }),
+  assignParticipant: protectedProcedure
+    .input(
+      z.object({
+        eventId: z.string(),
+        assigned: z.boolean(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const { eventId, assigned } = input;
+
+      const updatedEvent = await prisma.event.update({
+        where: { id: eventId },
+        data: {
+          participants: {
+            [assigned ? 'connect' : 'disconnect']: { id: ctx.user.id },
+          },
+        },
+        include: { tags: true, participants: true },
+      });
+
+      return mapEventToDTO(updatedEvent);
     }),
   update: procedure
     .input(

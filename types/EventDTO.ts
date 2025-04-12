@@ -8,8 +8,8 @@ export type EventDTO = {
   city: string;
   latitude: number;
   longitude: number;
-  startDate: string;
-  endDate: string;
+  startDate: Date;
+  endDate: Date;
   minCapacity: number;
   maxCapacity: number;
   price: number;
@@ -34,8 +34,8 @@ export function mapEventToDTO(event: Event & { tags: Hobby[]; participants: User
     city: event.city,
     latitude: event.latitude,
     longitude: event.longitude,
-    startDate: event.startDate.toISOString(),
-    endDate: event.endDate.toISOString(),
+    startDate: event.startDate,
+    endDate: event.endDate,
     minCapacity: event.minCapacity,
     maxCapacity: event.maxCapacity,
     price: event.price,
