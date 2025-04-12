@@ -17,7 +17,7 @@ const NavHeader = ({ company }: NavHeaderProps) => {
   return (
     <SidebarHeader className="flex flex-row justify-between">
       <div className="flex items-center gap-2">
-        <Avatar className="h-8 w-8">
+        <Avatar className="size-8">
           <AvatarFallback className="rounded-lg">{getInitials(company.name)}</AvatarFallback>
         </Avatar>
         <div className="grid flex-1 text-left text-sm leading-tight">

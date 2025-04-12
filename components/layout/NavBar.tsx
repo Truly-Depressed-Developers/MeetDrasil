@@ -1,6 +1,4 @@
 import React from 'react';
-import { AwardIcon, ClipboardListIcon, Home, QrCodeIcon, SettingsIcon } from 'lucide-react';
-import NavBarLink from '@/components/layout/NavBarLink';
 import Image from 'next/image';
 import Link from 'next/link';
 import SidebarTriggerWrapper from '@/components/layout/SidebarTriggerWrapper';
