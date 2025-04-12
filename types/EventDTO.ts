@@ -1,4 +1,5 @@
-import { Event, Hobby, User } from '@prisma/client';
+import type { Event, Hobby, User } from '@prisma/client';
+import type { HobbyDTO } from './HobbyDTO';
 
 export type EventDTO = {
   id: string;
@@ -18,10 +19,7 @@ export type EventDTO = {
   participants: ParticipantDTO[];
 };
 
-export type TagDTO = {
-  id: string;
-  name: string;
-};
+export type TagDTO = HobbyDTO;
 
 export type ParticipantDTO = {
   id: string;
@@ -52,6 +50,7 @@ export function mapTagToDTO(tag: Hobby): TagDTO {
   return {
     id: tag.id,
     name: tag.name,
+    image_url: tag.image,
   };
 }
 
