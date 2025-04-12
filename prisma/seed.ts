@@ -9,8 +9,8 @@ async function seedData() {
   await seedCompanies();
   await seedDepartaments();
   await seedHobbies();
-  await seedEvents();
   await seedUsers();
+  await seedEvents();
 }
 
 async function seedCompanies() {
@@ -55,9 +55,63 @@ async function seedHobbies() {
   return await prisma.hobby.createMany({ data: hobbies });
 }
 
-async function seedEvents() {
-  // Fetch hobby IDs to use in events
+async function seedUsers() {
+  const companies = await prisma.company.findMany();
+  const departaments = await prisma.departament.findMany();
   const hobbies = await prisma.hobby.findMany();
+
+  const users = [
+    {
+      id: 'bebc4590-3d03-4c64-b5d0-920d3569be76',
+      fullname: 'John Doe',
+      company: { connect: { id: companies[0].id } },
+      departament: { connect: { id: departaments[0].id } },
+    },
+    {
+      id: '2dd352cd-9149-48b0-b5aa-39a7c9715f72',
+      fullname: 'Jane Smith',
+      company: { connect: { id: companies[1].id } },
+      departament: { connect: { id: departaments[1].id } },
+    },
+    {
+      id: 'e7db75de-a338-41a4-8a05-2cdfec052930',
+      fullname: 'Alex Wilson',
+      company: { connect: { id: companies[2].id } },
+      departament: { connect: { id: departaments[2].id } },
+    },
+    {
+      id: 'a105a695-40cc-4e0d-ba4b-a190c3079038',
+      fullname: 'Maria Garcia',
+      company: { connect: { id: companies[0].id } },
+      departament: { connect: { id: departaments[3].id } },
+    },
+    {
+      id: '3bcfea38-f18b-48fc-b738-3902d220dcfc',
+      fullname: 'David Brown',
+      company: { connect: { id: companies[3].id } },
+      departament: { connect: { id: departaments[4].id } },
+    },
+  ];
+
+  for (const user of users) {
+    const randomHobbies = hobbies
+      .sort(() => 0.5 - Math.random())
+      .slice(0, Math.floor(Math.random() * 3) + 1);
+
+    await prisma.user.create({
+      data: {
+        ...user,
+        hobbies: {
+          connect: randomHobbies.map((hobby) => ({ id: hobby.id })),
+        },
+      },
+    });
+  }
+}
+
+async function seedEvents() {
+  const hobbies = await prisma.hobby.findMany();
+  const users = await prisma.user.findMany();
 
   const events = [
     {
@@ -71,7 +125,7 @@ async function seedEvents() {
       minCapacity: 50,
       maxCapacity: 500,
       price: 199.99,
-      ownerId: 'owner1',
+      ownerId: users[0].id,
       images: ['tech-conf-1.jpg', 'tech-conf-2.jpg'],
     },
     {
@@ -85,7 +139,7 @@ async function seedEvents() {
       minCapacity: 10,
       maxCapacity: 50,
       price: 49.99,
-      ownerId: 'owner2',
+      ownerId: users[1].id,
       images: ['outdoor-1.jpg', 'outdoor-2.jpg'],
     },
     {
@@ -99,7 +153,7 @@ async function seedEvents() {
       minCapacity: 100,
       maxCapacity: 1000,
       price: 79.99,
-      ownerId: 'owner3',
+      ownerId: users[2].id,
       images: ['art-fest-1.jpg', 'art-fest-2.jpg', 'art-fest-3.jpg'],
     },
     {
@@ -113,19 +167,17 @@ async function seedEvents() {
       minCapacity: 8,
       maxCapacity: 30,
       price: 15.0,
-      ownerId: 'owner4',
+      ownerId: users[3].id,
       images: ['boardgame-1.jpg'],
     },
   ];
 
-  // Create events one by one to connect with hobbies
   for (const eventData of events) {
-    // Select 2-3 random hobbies for each event
     const randomHobbies = hobbies
       .sort(() => 0.5 - Math.random())
       .slice(0, Math.floor(Math.random() * 2) + 2);
 
-    await prisma.event.create({
+    const event = await prisma.event.create({
       data: {
         ...eventData,
         tags: {
@@ -133,61 +185,19 @@ async function seedEvents() {
         },
       },
     });
-  }
-}
 
-async function seedUsers() {
-  // Get IDs to use for relations
-  const companies = await prisma.company.findMany();
-  const departaments = await prisma.departament.findMany();
-  const hobbies = await prisma.hobby.findMany();
-  const events = await prisma.event.findMany();
-
-  const users = [
-    {
-      fullname: 'John Doe',
-      company: { connect: { id: companies[0].id } },
-      departament: { connect: { id: departaments[0].id } },
-    },
-    {
-      fullname: 'Jane Smith',
-      company: { connect: { id: companies[1].id } },
-      departament: { connect: { id: departaments[1].id } },
-    },
-    {
-      fullname: 'Alex Wilson',
-      company: { connect: { id: companies[2].id } },
-      departament: { connect: { id: departaments[2].id } },
-    },
-    {
-      fullname: 'Maria Garcia',
-      company: { connect: { id: companies[0].id } },
-      departament: { connect: { id: departaments[3].id } },
-    },
-    {
-      fullname: 'David Brown',
-      company: { connect: { id: companies[3].id } },
-      departament: { connect: { id: departaments[4].id } },
-    },
-  ];
-
-  // Create users one by one to connect with hobbies and events
-  for (let i = 0; i < users.length; i++) {
-    // Select 1-3 random hobbies for each user
-    const randomHobbies = hobbies
+    // Assign random participants to the event
+    const randomParticipants = users
+      .filter((user) => user.id !== eventData.ownerId)
       .sort(() => 0.5 - Math.random())
-      .slice(0, Math.floor(Math.random() * 3) + 1);
+      .slice(0, Math.floor(Math.random() * 5) + 1);
 
-    // Select a random event for some users
-    const randomEvent = i < 3 ? events[i] : null;
-
-    await prisma.user.create({
+    await prisma.event.update({
+      where: { id: event.id },
       data: {
-        ...users[i],
-        hobbies: {
-          connect: randomHobbies.map((hobby) => ({ id: hobby.id })),
+        participants: {
+          connect: randomParticipants.map((user) => ({ id: user.id })),
         },
-        ...(randomEvent ? { Event: { connect: { id: randomEvent.id } } } : {}),
       },
     });
   }
@@ -231,6 +241,5 @@ main()
     process.exit(1);
   })
   .finally(async () => {
-    // Close Prisma Client at the end
     await prisma.$disconnect();
   });
