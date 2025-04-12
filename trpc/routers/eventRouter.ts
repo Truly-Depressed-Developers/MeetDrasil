@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { procedure, router } from '../init';
+import { procedure, protectedProcedure, router } from '../init';
 import { prisma } from '@/prisma/prisma';
 import { EventDTO, mapEventToDTO } from '@/types/EventDTO';
 
@@ -17,28 +17,38 @@ export const eventRouter = router({
     });
     return event ? mapEventToDTO(event) : null;
   }),
-  create: procedure
+  create: protectedProcedure
     .input(
       z.object({
         name: z.string(),
         description: z.string(),
+        tags: z.array(z.string()),
         city: z.string(),
         latitude: z.number(),
         longitude: z.number(),
         startDate: z.date(),
         endDate: z.date(),
-        minCapacity: z.number(),
-        maxCapacity: z.number(),
-        price: z.number(),
-        ownerId: z.string(),
-        images: z.array(z.string()),
+        minCapacity: z.number().optional(),
+        maxCapacity: z.number().optional(),
+        price: z.number().optional(),
+        images: z.array(z.string()).optional(),
       })
     )
-    .mutation(async ({ input }): Promise<EventDTO> => {
+    .mutation(async ({ input, ctx }): Promise<EventDTO> => {
       const event = await prisma.event.create({
-        data: input,
-        include: { tags: true, participants: true },
+        data: {
+          ...input,
+          ownerId: ctx.user.id,
+          tags: {
+            connect: input.tags.map((id) => ({ id })),
+          },
+        },
+        include: {
+          tags: true,
+          participants: true,
+        },
       });
+
       return mapEventToDTO(event);
     }),
   update: procedure
