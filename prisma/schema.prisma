@@ -7,9 +7,54 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Example {
-  id        String   @id @default(cuid())
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model User {
+  id            String       @id @default(cuid())
+  fullname      String?
+  companyId     String?
+  company       Company?     @relation(fields: [companyId], references: [id])
+  departamentId String?
+  departament   Departament? @relation(fields: [departamentId], references: [id])
+  hobbies       Hobby[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  Event         Event?       @relation(fields: [eventId], references: [id])
+  eventId       String?
+}
+
+model Hobby {
+  id      String  @id @default(cuid())
+  name    String
+  User    User[]
+  Event   Event?  @relation(fields: [eventId], references: [id])
+  eventId String?
+}
+
+model Event {
+  id           String   @id @default(cuid())
+  name         String
+  description  String
+  tags         Hobby[]
+  participants User[]
+  city         String
+  latitude     Float
+  longitude    Float
+  startDate    DateTime
+  endDate      DateTime
+  minCapacity  Int
+  maxCapacity  Int
+  price        Float
+  ownerId      String
+  images       String[]
+}
+
+model Company {
+  id   String @id @default(cuid())
+  name String
+  User User[]
+}
+
+model Departament {
+  id   String @id @default(cuid())
+  name String
+  User User[]
 }

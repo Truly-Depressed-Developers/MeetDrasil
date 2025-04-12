@@ -43,6 +43,7 @@
     "@trpc/server": "11.0.0-rc.755",
     "@turf/turf": "^7.2.0",
     "@types/js-cookie": "^3.0.6",
+    "@uploadthing/react": "^7.3.0",
     "@yudiel/react-qr-scanner": "2.2.1",
     "class-variance-authority": "^0.7.1",
     "client-only": "^0.0.1",
@@ -71,6 +72,7 @@
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
     "tsx": "^4.19.2",
+    "uploadthing": "^7.6.0",
     "vaul": "^1.1.2",
     "zod": "^3.24.2"
   },
