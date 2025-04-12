@@ -138,7 +138,7 @@ export default function RegisterForm({ className }: RegisterFormProps) {
 
           <div className="mt-4 text-center text-sm">
             Already have an account?{' '}
-            <Link href="/auth/login" className="mt-3  underline underline-offset-4">
+            <Link href="/auth/login" className="mt-3 underline underline-offset-4">
               Sign in
             </Link>
           </div>

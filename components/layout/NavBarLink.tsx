@@ -19,10 +19,10 @@ export default function NavBarLink({ text, url, children }: NavBarLinkProps) {
     <Link
       href={url}
       className={cn(
-        'flex flex-col items-center justify-center gap-1 text-xs transition-colors text-muted-foreground',
+        'flex flex-col items-center justify-center gap-1 text-xs text-muted-foreground transition-colors',
         {
-          'text-foreground ': isActive,
-          'text-muted-foreground ': !isActive,
+          'text-foreground': isActive,
+          'text-muted-foreground': !isActive,
         }
       )}
       prefetch={true}
