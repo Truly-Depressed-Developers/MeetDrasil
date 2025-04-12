@@ -12,7 +12,12 @@ const Map = ({
 }: {
   long: number;
   lat: number;
-  markers: { long: number; lat: number; content: { name: string; date: string } }[];
+  markers: {
+    long: number;
+    lat: number;
+    content: { name: string; date: string };
+    eventId: string;
+  }[];
 }) => {
   const geoControlRef = useRef<maplibregl.GeolocateControl>(null);
   const mapRef = useRef<MapRef>(null);
@@ -37,7 +42,13 @@ const Map = ({
         // onGeolocate={handleGeolocate}
       />
       {markers.map((marker, index) => (
-        <Marker key={index} long={marker.long} lat={marker.lat} content={marker.content} />
+        <Marker
+          key={index}
+          long={marker.long}
+          lat={marker.lat}
+          content={marker.content}
+          eventId={marker.eventId}
+        />
       ))}
     </MapComponent>
   );

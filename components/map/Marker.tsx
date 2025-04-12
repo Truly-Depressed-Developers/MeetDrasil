@@ -6,6 +6,7 @@ import { Marker as MapMarker, useMap } from 'react-map-gl/maplibre';
 import { renderToString } from 'react-dom/server';
 import Image from 'next/image';
 import { Calendar } from 'lucide-react';
+import Link from 'next/link';
 
 let currentOpenPopup: Popup | null = null;
 
@@ -13,10 +14,12 @@ const Marker = ({
   long,
   lat,
   content,
+  eventId,
 }: {
   long: number;
   lat: number;
   content: { name: string; date: string };
+  eventId: string;
 }) => {
   const { current: mapRef } = useMap();
   const popupRef = useRef<Popup | null>(null);
@@ -48,7 +51,7 @@ const Marker = ({
           className: 'marker-popup',
         })
           .setLngLat([long, lat])
-          .setHTML(renderToString(<NewPopup {...content} />))
+          .setHTML(renderToString(<NewPopup {...content} eventId={eventId} />))
           .addTo(mapRef.getMap());
 
         popupRef.current = newPopup;
@@ -76,7 +79,7 @@ const Marker = ({
         currentOpenPopup = null;
       }
     },
-    [mapRef, content, long, lat]
+    [mapRef, content, long, lat, eventId]
   );
 
   useEffect(() => {
@@ -101,14 +104,16 @@ const Marker = ({
 
 export default Marker;
 
-const NewPopup = ({ name, date }: { name: string; date: string }) => {
+const NewPopup = ({ name, date, eventId }: { name: string; date: string; eventId: string }) => {
   return (
-    <div className="min-w-[180px] bg-background text-foreground">
-      <h3 className="p-3 text-center text-base font-medium">{name}</h3>
-      <p className="flex items-center justify-center pb-3">
-        <Calendar className="mr-1 size-3.5 shrink-0" />
-        {date}
-      </p>
-    </div>
+    <Link href={`/events/${eventId}`}>
+      <div className="min-w-[180px] bg-background text-foreground">
+        <h3 className="p-3 text-center text-base font-medium">{name}</h3>
+        <p className="flex items-center justify-center pb-3">
+          <Calendar className="mr-1 size-3.5 shrink-0" />
+          {date}
+        </p>
+      </div>
+    </Link>
   );
 };
