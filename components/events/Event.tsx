@@ -56,8 +56,16 @@ export default function EventCard({ id }: Props) {
 
   return (
     <Card className="mx-auto max-w-4xl">
-      <CardHeader>
+      <CardHeader className="flex flex-row flex-wrap items-center justify-between">
         <CardTitle className="text-3xl">{event.name}</CardTitle>
+        {event.ownerId === currentUser?.id && (
+          <HobbyBadge
+            className="w-fit px-2 py-1 text-sm"
+            isActive={true}
+            imageUrl="/icons/crown.png"
+            name={'Owner'}
+          />
+        )}
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-4 md:flex-row">
