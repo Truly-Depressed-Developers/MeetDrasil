@@ -1,13 +1,26 @@
 'use client';
 
 import { z } from 'zod';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { DateTimePicker24h } from '@/components/eventForm/DateTimePicker';
 import { useState } from 'react';
 import { Switch } from '@/components/ui/switch';
@@ -312,8 +325,7 @@ export default function EventForm() {
                       'ut-uploading:cursor-not-allowed bg-white text-black border-white shadow-sm hover:bg-white/90',
                     allowedContent: 'text-white',
                   }}
-                  {/* eslint-disable-next-line tailwindcss/no-custom-classname */}
-                  className="custom-class ut-button:bg-foreground ut-button:text-background ut-allowed-content:text-foreground ut-label:text-foreground/50 hover:ut-label:text-foreground ut-uploading:ut-button:cursor-not-allowed ut-uploading:ut-button:bg-foreground/90 border-foreground/30 bg-foreground/10"
+                  className="custom-class border-foreground/30 bg-foreground/10 ut-button:bg-foreground ut-button:text-background ut-allowed-content:text-foreground ut-label:text-foreground/50 hover:ut-label:text-foreground ut-uploading:ut-button:cursor-not-allowed ut-uploading:ut-button:bg-foreground/90"
                   onUploadBegin={() => {
                     setIsUploading(true);
                   }}
