@@ -153,7 +153,7 @@ importers:
         specifier: ^5.5.0
         version: 5.5.0(react@19.1.0)
       react-map-gl:
-        specifier: ^8.0.1
+        specifier: ^8.0.3
         version: 8.0.3(maplibre-gl@5.3.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       server-only:
         specifier: ^0.0.1

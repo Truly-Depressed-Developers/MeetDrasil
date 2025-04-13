@@ -15,11 +15,13 @@ const Marker = ({
   lat,
   content,
   eventId,
+  clickable,
 }: {
   long: number;
   lat: number;
   content: { name: string; date: string };
   eventId: string;
+  clickable: boolean;
 }) => {
   const { current: mapRef } = useMap();
   const popupRef = useRef<Popup | null>(null);
@@ -29,7 +31,7 @@ const Marker = ({
     (e: React.MouseEvent) => {
       e.stopPropagation();
 
-      if (!mapRef) return;
+      if (!mapRef || !clickable) return;
 
       try {
         if (currentOpenPopup && currentOpenPopup !== popupRef.current) {

@@ -23,7 +23,7 @@ const items = [
   },
   {
     title: 'Create Event',
-    url: '#',
+    url: '/addEvent',
     icon: MapPlus,
   },
   {

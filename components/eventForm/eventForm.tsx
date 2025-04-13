@@ -1,6 +1,6 @@
 'use client';
 
-import { z } from 'zod';
+import { number, z } from 'zod';
 import {
   Form,
   FormControl,
@@ -29,6 +29,8 @@ import { showToast } from '@/lib/showToast';
 import { redirect } from 'next/navigation';
 import { UploadDropzone } from '../uploadthing/uploadthing';
 import EventFormImages from './eventFormImages';
+import Map from '../map/Map';
+import { MapLayerMouseEvent } from 'react-map-gl/maplibre';
 
 const formSchema = z
   .object({
@@ -58,10 +60,16 @@ const formSchema = z
     path: ['endDate'],
   });
 
+type Marker = {
+  long: number | undefined;
+  lat: number | undefined;
+};
+
 export default function EventForm() {
   const [isCapacityEnabled, setIsCapacityEnabled] = useState(false);
   const [isPriceEnabled, setIsPriceEnabled] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [markerData, setMarkerData] = useState<Marker>({ long: undefined, lat: undefined });
 
   const hobbies = trpc.hobby.getAll.useQuery();
   const mutation = trpc.event.create.useMutation();
@@ -73,8 +81,8 @@ export default function EventForm() {
       description: '',
       tags: [''],
       city: '',
-      latitude: 0,
-      longitude: 0,
+      latitude: undefined,
+      longitude: undefined,
       startDate: new Date(),
       endDate: new Date(),
       minCapacity: undefined,
@@ -159,48 +167,47 @@ export default function EventForm() {
             </FormItem>
           )}
         />
-        <div className="flex items-end gap-x-4">
-          <FormField
-            control={form.control}
-            name="city"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>City</FormLabel>
-                <FormControl>
-                  <Input placeholder="Event City" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button>Set location</Button>
+        <FormField
+          control={form.control}
+          name="city"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>City</FormLabel>
+              <FormControl>
+                <Input placeholder="Event City" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div className="space-y-2">
+          <FormLabel>Location</FormLabel>
         </div>
-        <FormField
-          control={form.control}
-          name="latitude"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Latitude</FormLabel>
-              <FormControl>
-                <Input type="number" placeholder="Event Latitude" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="longitude"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Longitude</FormLabel>
-              <FormControl>
-                <Input type="number" placeholder="Event Longitude" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+
+        <div className="h-96 w-full">
+          <Map
+            long={19.94}
+            lat={50.05}
+            markers={
+              markerData.lat && markerData.long
+                ? [{ long: markerData.long, lat: markerData.lat, clickable: false }]
+                : []
+            }
+            onClick={(data: MapLayerMouseEvent) => {
+              setMarkerData({ long: data.lngLat.lng, lat: data.lngLat.lat });
+              form.setValue('latitude', data.lngLat.lat);
+              form.setValue('longitude', data.lngLat.lng);
+            }}
+          />
+        </div>
+        {form.formState.errors.latitude || form.formState.errors.longitude ? (
+          <div className="text-sm text-destructive">
+            {form.formState.errors.latitude?.message ||
+              form.formState.errors.longitude?.message ||
+              'Select location on map'}
+          </div>
+        ) : null}
         <div className="flex gap-x-4">
           <FormField
             control={form.control}
@@ -229,7 +236,6 @@ export default function EventForm() {
             )}
           />
         </div>
-
         <div className="space-y-2">
           <div className="flex items-center gap-x-4">
             <FormLabel>Capacity</FormLabel>
@@ -276,7 +282,6 @@ export default function EventForm() {
             </div>
           )}
         </div>
-
         <div className="space-y-2">
           <div className="flex items-center gap-x-4">
             <FormLabel>Price</FormLabel>
@@ -307,7 +312,6 @@ export default function EventForm() {
             />
           )}
         </div>
-
         <FormField
           control={form.control}
           name="images"
@@ -322,7 +326,7 @@ export default function EventForm() {
                       'ut-uploading:cursor-not-allowed bg-white text-black border-white shadow-sm hover:bg-white/90',
                     allowedContent: 'text-white',
                   }}
-                  className="custom-class ut-allowed-content:text-foreground ut-label:text-foreground/50 hover:ut-label:text-foreground ut-button:bg-foreground ut-button:text-background ut-allowed-content:text-white ut-uploading:ut-button:cursor-not-allowed ut-uploading:ut-button:bg-foreground/90 border-foreground/30 bg-foreground/10"
+                  className="custom-class border-foreground/30 bg-foreground/10 ut-button:bg-foreground ut-button:text-background ut-allowed-content:text-foreground ut-allowed-content:text-white ut-label:text-foreground/50 hover:ut-label:text-foreground ut-uploading:ut-button:cursor-not-allowed ut-uploading:ut-button:bg-foreground/90"
                   onUploadBegin={() => {
                     setIsUploading(true);
                   }}
@@ -343,8 +347,7 @@ export default function EventForm() {
             </FormItem>
           )}
         />
-
-        <Button type="submit" className="w-full" disabled={isUploading || !form.formState.isValid}>
+        <Button type="submit" className="w-full" disabled={isUploading}>
           Create Event
         </Button>
       </form>
