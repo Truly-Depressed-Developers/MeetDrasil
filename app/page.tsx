@@ -38,8 +38,8 @@ const EventPage = async () => {
               <EventList
                 events={eventData.filter(
                   (event) =>
-                    event.participants.some((p) => p.id == userData.id) ||
-                    event.ownerId == userData.id
+                    event.participants.some((p) => p.id == userData?.id) ||
+                    event.ownerId == userData?.id
                 )}
               />
             </TabsContent>
@@ -48,8 +48,8 @@ const EventPage = async () => {
                 events={eventData.filter(
                   (event) =>
                     userHobbies.some((hobby) => event.tags.some((tag) => tag.id == hobby.id)) &&
-                    event.ownerId != userData.id &&
-                    !event.participants.some((p) => p.id == userData.id)
+                    event.ownerId != userData?.id &&
+                    !event.participants.some((p) => p.id == userData?.id)
                 )}
               />
             </TabsContent>
@@ -57,8 +57,8 @@ const EventPage = async () => {
               <EventList
                 events={eventData.filter(
                   (event) =>
-                    event.ownerId != userData.id &&
-                    !event.participants.some((p) => p.id == userData.id)
+                    event.ownerId != userData?.id &&
+                    !event.participants.some((p) => p.id == userData?.id)
                 )}
               />
             </TabsContent>

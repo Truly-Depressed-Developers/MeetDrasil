@@ -21,8 +21,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Hacknarok',
-  description: 'Hacknarok',
+  title: 'Meetdrasil',
+  description:
+    'MeetDrasil is an app designed to help employees in large companies navigate corporate life—not through another productivity tool, but by fostering real human connections.',
 };
 
 export default function RootLayout({

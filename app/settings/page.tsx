@@ -7,9 +7,11 @@ export default function Settings() {
   return (
     <PageLayout>
       <PageTitle>Settings</PageTitle>
-      <GeneralSettings />
-      <AccountSettings />
-      <TestSettings />
+      <div className="mx-auto max-w-2xl">
+        <GeneralSettings />
+        <AccountSettings />
+        <TestSettings />
+      </div>
     </PageLayout>
   );
 }
