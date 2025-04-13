@@ -13,7 +13,7 @@ type BadgeWithImageProps = {
 const BadgeWithImage = ({ className, name, iconSize, imageUrl, isActive }: BadgeWithImageProps) => {
   return (
     <Badge
-      className={cn('rounded-full px-3 py-2 text-base', className)}
+      className={cn('rounded-full px-3 py-2 text-sm', className)}
       variant={isActive ? 'default' : 'outline'}
     >
       <Image

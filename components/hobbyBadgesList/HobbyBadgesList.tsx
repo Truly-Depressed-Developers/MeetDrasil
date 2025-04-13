@@ -3,22 +3,39 @@
 import React, { useState } from 'react';
 import BadgeWithImage from '@/components/hobbyBadge/HobbyBadge';
 import { Button } from '../ui/button';
+import { trpc } from '@/trpc/client';
+import { showToast } from '@/lib/showToast';
+import { HobbyDTO } from '@/types/HobbyDTO';
+import { redirect } from 'next/navigation';
 
 type HobbyBadgesListProps = {
-  hobbies: {
-    id: string;
-    name: string;
-    image_url: string;
-  }[];
+  hobbies: HobbyDTO[];
+  initialHobbyIds: string[];
 };
 
-const HobbyBadgesList = ({ hobbies }: HobbyBadgesListProps) => {
-  const [selectedHobbies, setSelectedHobbies] = useState<string[]>([]);
+const HobbyBadgesList = ({ hobbies, initialHobbyIds }: HobbyBadgesListProps) => {
+  const [selectedHobbies, setSelectedHobbies] = useState<string[]>(initialHobbyIds);
+  const utils = trpc.useContext();
+  const saveSelected = trpc.hobby.saveSelected.useMutation({
+    onSuccess() {
+      utils.hobby.getAll.invalidate();
+      utils.hobby.getSelected.invalidate();
+    },
+  });
 
   const toggleHobby = (hobbyId: string) => {
     setSelectedHobbies((prev) =>
       prev.includes(hobbyId) ? prev.filter((id) => id !== hobbyId) : [...prev, hobbyId]
     );
+  };
+
+  const handleSave = async () => {
+    saveSelected.mutate({ hobbyIds: selectedHobbies });
+    await showToast({
+      title: 'Hobbies saved',
+      description: 'Your hobbies have been saved successfully.',
+    });
+    redirect('/');
   };
 
   return (
@@ -38,7 +55,9 @@ const HobbyBadgesList = ({ hobbies }: HobbyBadgesListProps) => {
           </li>
         ))}
       </ul>
-      <Button className="rounded-full">Save and Continue</Button>
+      <Button className="rounded-full" onClick={handleSave}>
+        Save and Continue
+      </Button>
     </div>
   );
 };
