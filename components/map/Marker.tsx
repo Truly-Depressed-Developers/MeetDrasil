@@ -106,7 +106,7 @@ export default Marker;
 
 const NewPopup = ({ name, date, eventId }: { name: string; date: string; eventId: string }) => {
   return (
-    <Link href={`/events/${eventId}`}>
+    <Link href={`/event/${eventId}`}>
       <div className="min-w-[180px] bg-background text-foreground">
         <h3 className="p-3 text-center text-base font-medium">{name}</h3>
         <p className="flex items-center justify-center pb-3">

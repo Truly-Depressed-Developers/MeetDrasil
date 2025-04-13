@@ -1,8 +1,5 @@
 'use client';
 
-'use client';
-
-import { Bell, ChevronsUpDown, LogOut, Sparkles, UserCog } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -20,16 +17,23 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { getInitials } from '@/lib/utils';
+import { trpc } from '@/trpc/client';
+import { Bell, ChevronsUpDown, LogOut, Sparkles, UserCog } from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string;
-    email: string;
-  };
-}) {
+export function NavUser() {
   const { isMobile } = useSidebar();
+  const router = useRouter();
+  const { data: user, isLoading } = trpc.user.getCurrent.useQuery();
+
+  if (isLoading) {
+    return null;
+  }
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <SidebarMenu>
@@ -76,17 +80,19 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <UserCog />
-                Account
-              </DropdownMenuItem>
+              <Link href="/settings" className="cursor-pointer">
+                <DropdownMenuItem>
+                  <UserCog />
+                  Account
+                </DropdownMenuItem>
+              </Link>
               <DropdownMenuItem>
                 <Bell />
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => router.push('/auth/logout')}>
               <LogOut />
               Log out
             </DropdownMenuItem>
