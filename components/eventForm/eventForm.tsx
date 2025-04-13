@@ -185,7 +185,7 @@ export default function EventForm() {
           <FormLabel>Location</FormLabel>
         </div>
 
-        <div className="h-96 w-full">
+        <div className="h-96 w-full overflow-hidden rounded-md">
           <Map
             long={19.94}
             lat={50.05}
@@ -208,7 +208,7 @@ export default function EventForm() {
               'Select location on map'}
           </div>
         ) : null}
-        <div className="flex gap-x-4">
+        <div className="flex flex-col gap-4 sm:flex-row">
           <FormField
             control={form.control}
             name="startDate"
@@ -252,13 +252,13 @@ export default function EventForm() {
           </div>
 
           {isCapacityEnabled && (
-            <div className="flex gap-x-4">
+            <div className="flex flex-col gap-4 sm:flex-row">
               <FormField
                 control={form.control}
                 name="minCapacity"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel>Minimum Capacity</FormLabel>
+                    <FormLabel>Minimum</FormLabel>
                     <FormControl>
                       <Input type="number" placeholder="Event Minimum Capacity" {...field} />
                     </FormControl>
@@ -271,7 +271,7 @@ export default function EventForm() {
                 name="maxCapacity"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel>Maximum Capacity</FormLabel>
+                    <FormLabel>Maximum</FormLabel>
                     <FormControl>
                       <Input type="number" placeholder="Event Maximum Capacity" {...field} />
                     </FormControl>
@@ -302,7 +302,6 @@ export default function EventForm() {
               name="price"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Price</FormLabel>
                   <FormControl>
                     <Input type="number" placeholder="Event Price" {...field} />
                   </FormControl>
@@ -326,7 +325,7 @@ export default function EventForm() {
                       'ut-uploading:cursor-not-allowed bg-white text-black border-white shadow-sm hover:bg-white/90',
                     allowedContent: 'text-white',
                   }}
-                  className="custom-class border-foreground/30 bg-foreground/10 ut-button:bg-foreground ut-button:text-background ut-allowed-content:text-foreground ut-allowed-content:text-white ut-label:text-foreground/50 hover:ut-label:text-foreground ut-uploading:ut-button:cursor-not-allowed ut-uploading:ut-button:bg-foreground/90"
+                  className="custom-class ut-button:bg-foreground ut-button:text-background ut-allowed-content:text-foreground ut-allowed-content:text-white ut-label:text-foreground/50 hover:ut-label:text-foreground ut-uploading:ut-button:cursor-not-allowed ut-uploading:ut-button:bg-foreground/90 border-foreground/30 bg-foreground/10"
                   onUploadBegin={() => {
                     setIsUploading(true);
                   }}
