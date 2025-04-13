@@ -124,7 +124,7 @@ async function seedEvents() {
       maxCapacity: 500,
       price: 199.99,
       ownerId: users[0].id,
-      images: ['tech-conf-1.jpg', 'tech-conf-2.jpg'],
+      images: ['https://fzpsqhdkdy.ufs.sh/f/y6uhPjTjpTOZQXlYAHt0dzXsNVg1xKpbGr3kqyWTPEMYUZm7'],
     },
     {
       name: 'Outdoor Adventure Day',
@@ -138,7 +138,7 @@ async function seedEvents() {
       maxCapacity: 50,
       price: 49.99,
       ownerId: users[1].id,
-      images: ['outdoor-1.jpg', 'outdoor-2.jpg'],
+      images: ['https://fzpsqhdkdy.ufs.sh/f/y6uhPjTjpTOZL0DJkamLuGQrkpWg2lYdzyHDhwc394OXIBPV'],
     },
     {
       name: 'Art & Culture Festival',
@@ -152,7 +152,7 @@ async function seedEvents() {
       maxCapacity: 1000,
       price: 79.99,
       ownerId: users[2].id,
-      images: ['art-fest-1.jpg', 'art-fest-2.jpg', 'art-fest-3.jpg'],
+      images: ['https://fzpsqhdkdy.ufs.sh/f/y6uhPjTjpTOZ80kWxoJfG2Eh4ctgYJaWxQqBb7nzPMsor0kS'],
     },
     {
       name: 'Board Game Night',
@@ -166,7 +166,7 @@ async function seedEvents() {
       maxCapacity: 30,
       price: 15.0,
       ownerId: users[3].id,
-      images: ['boardgame-1.jpg'],
+      images: ['https://fzpsqhdkdy.ufs.sh/f/y6uhPjTjpTOZoxvVz21mEhVr4b2WgYnDvCzFBe1NkOU0dxJj'],
     },
   ];
 
