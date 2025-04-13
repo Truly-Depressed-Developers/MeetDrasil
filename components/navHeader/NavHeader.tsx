@@ -22,11 +22,11 @@ const NavHeader = () => {
     <SidebarHeader className="flex flex-row justify-between p-4">
       <div className="flex items-center gap-2">
         <Avatar className="size-8">
-          <AvatarFallback className="rounded-lg">{getInitials(user.companyName)}</AvatarFallback>
+          <AvatarFallback className="rounded-lg">{getInitials(user.company.name)}</AvatarFallback>
         </Avatar>
         <div className="grid flex-1 text-left text-sm leading-tight">
-          <span className="truncate font-semibold">{user.companyName}</span>
-          <span className="truncate text-xs">{user.companyPlan}</span>
+          <span className="truncate font-semibold">{user.company.name}</span>
+          <span className="truncate text-xs">{user.company.plan.name}</span>
         </div>
       </div>
       <div

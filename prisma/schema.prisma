@@ -8,17 +8,17 @@ datasource db {
 }
 
 model User {
-  id            String       @id @default(cuid())
-  fullname      String?
-  companyId     String?
-  company       Company?     @relation(fields: [companyId], references: [id])
-  departamentId String?
-  departament   Departament? @relation(fields: [departamentId], references: [id])
-  hobbies       Hobby[]
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  events        Event[]      @relation("EventParticipants")
-  ownedEvents   Event[]      @relation("EventOwner")
+  id           String     @id @default(cuid())
+  fullname     String
+  companyId    String
+  company      Company    @relation(fields: [companyId], references: [id])
+  departmentId String
+  department   Department @relation(fields: [departmentId], references: [id])
+  hobbies      Hobby[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  events       Event[]    @relation("EventParticipants")
+  ownedEvents  Event[]    @relation("EventOwner")
 }
 
 model Hobby {
@@ -49,12 +49,20 @@ model Event {
 }
 
 model Company {
-  id   String @id @default(cuid())
-  name String
-  User User[]
+  id     String @id @default(cuid())
+  name   String
+  User   User[]
+  Plan   Plan   @relation(fields: [planId], references: [id])
+  planId String
 }
 
-model Departament {
+model Plan {
+  id        String    @id @default(cuid())
+  name      String
+  companies Company[]
+}
+
+model Department {
   id   String @id @default(cuid())
   name String
   User User[]
