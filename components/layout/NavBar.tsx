@@ -10,19 +10,6 @@ export default function NavBar() {
         <Image src={'/logo.png'} alt="Logo" width={48} height={48} className="rounded-lg" />
       </Link>
       <SidebarTriggerWrapper />
-
-      {/* <NavBarLink text="A" url="/a">
-        <ClipboardListIcon className="size-6" />
-      </NavBarLink>
-      <NavBarLink text="B" url="/b">
-        <QrCodeIcon className="size-6" />
-      </NavBarLink>
-      <NavBarLink text="C" url="/c">
-        <AwardIcon className="size-6" />
-      </NavBarLink>
-      <NavBarLink text="Settings" url="/settings">
-        <SettingsIcon className="size-6" />
-      </NavBarLink> */}
     </nav>
   );
 }
