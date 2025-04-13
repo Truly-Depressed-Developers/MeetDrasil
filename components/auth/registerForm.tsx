@@ -83,7 +83,7 @@ export default function RegisterForm({ className }: RegisterFormProps) {
         message: 'Signed up successfully! Redirecting...',
       });
 
-      router.push('/');
+      router.push('/hobby');
       router.refresh();
     } else {
       setServerMessage({
