@@ -38,7 +38,7 @@ const HobbyBadgesList = ({ hobbies }: HobbyBadgesListProps) => {
           </li>
         ))}
       </ul>
-      <Button>Save and Continue</Button>
+      <Button className="rounded-full">Save and Continue</Button>
     </div>
   );
 };

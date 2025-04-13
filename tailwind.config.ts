@@ -59,10 +59,20 @@ export default withUt({
           foreground: 'hsl(var(--success-foreground))',
         },
         info: 'hsl(var(--info))',
+        sidebar: {
+          DEFAULT: 'hsl(var(--sidebar-background))',
+          foreground: 'hsl(var(--sidebar-foreground))',
+          primary: 'hsl(var(--sidebar-primary))',
+          'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
+          accent: 'hsl(var(--sidebar-accent))',
+          'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
+          border: 'hsl(var(--sidebar-border))',
+          ring: 'hsl(var(--sidebar-ring))',
+        },
       },
       borderRadius: {
-        lg: `var(--radius)`,
-        md: `calc(var(--radius) - 2px)`,
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
       animation: {
@@ -70,8 +80,12 @@ export default withUt({
       },
       keyframes: {
         shimmer: {
-          '0%': { backgroundPosition: '300% 0' },
-          '100%': { backgroundPosition: '-300% 0' },
+          '0%': {
+            backgroundPosition: '300% 0',
+          },
+          '100%': {
+            backgroundPosition: '-300% 0',
+          },
         },
       },
     },
