@@ -18,7 +18,7 @@ export default function EventList({ events }: { events: EventDTO[] }) {
             <div className="flex flex-col sm:h-40 sm:flex-row md:h-44">
               <div className="h-36 sm:h-full sm:w-1/3">
                 <Image
-                  src={'https://placehold.co/144x144'}
+                  src={event.images.length > 0 ? event.images[0] : 'https://placehold.co/144x144'}
                   width={144}
                   height={144}
                   alt={event.name}
