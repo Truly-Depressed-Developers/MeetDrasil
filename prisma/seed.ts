@@ -6,27 +6,36 @@ const prisma = new PrismaClient();
  * Seed the database with initial data
  */
 async function seedData() {
+  await seedPlans();
   await seedCompanies();
-  await seedDepartaments();
+  await seedDepartments();
   await seedHobbies();
   await seedUsers();
   await seedEvents();
 }
 
+async function seedPlans() {
+  const plans = [{ name: 'Basic' }, { name: 'Premium' }];
+
+  return await prisma.plan.createMany({ data: plans });
+}
+
 async function seedCompanies() {
+  const plans = await prisma.plan.findMany();
+
   const companies = [
-    { name: 'Acme Corp' },
-    { name: 'Globex Industries' },
-    { name: 'Initech' },
-    { name: 'TechNova' },
-    { name: 'Stark Industries' },
+    { name: 'Acme Corp', planId: plans[0].id },
+    { name: 'Globex Industries', planId: plans[1].id },
+    { name: 'Initech', planId: plans[0].id },
+    { name: 'TechNova', planId: plans[1].id },
+    { name: 'Stark Industries', planId: plans[1].id },
   ];
 
   return await prisma.company.createMany({ data: companies });
 }
 
-async function seedDepartaments() {
-  const departaments = [
+async function seedDepartments() {
+  const departments = [
     { name: 'Engineering' },
     { name: 'Marketing' },
     { name: 'Sales' },
@@ -35,7 +44,7 @@ async function seedDepartaments() {
     { name: 'Finance' },
   ];
 
-  return await prisma.departament.createMany({ data: departaments });
+  return await prisma.department.createMany({ data: departments });
 }
 
 async function seedHobbies() {
@@ -55,7 +64,7 @@ async function seedHobbies() {
 
 async function seedUsers() {
   const companies = await prisma.company.findMany();
-  const departaments = await prisma.departament.findMany();
+  const departments = await prisma.department.findMany();
   const hobbies = await prisma.hobby.findMany();
 
   const users = [
@@ -63,31 +72,31 @@ async function seedUsers() {
       id: 'bebc4590-3d03-4c64-b5d0-920d3569be76',
       fullname: 'John Doe',
       company: { connect: { id: companies[0].id } },
-      departament: { connect: { id: departaments[0].id } },
+      department: { connect: { id: departments[0].id } },
     },
     {
       id: '2dd352cd-9149-48b0-b5aa-39a7c9715f72',
       fullname: 'Jane Smith',
       company: { connect: { id: companies[1].id } },
-      departament: { connect: { id: departaments[1].id } },
+      department: { connect: { id: departments[1].id } },
     },
     {
       id: 'e7db75de-a338-41a4-8a05-2cdfec052930',
       fullname: 'Alex Wilson',
       company: { connect: { id: companies[2].id } },
-      departament: { connect: { id: departaments[2].id } },
+      department: { connect: { id: departments[2].id } },
     },
     {
       id: 'a105a695-40cc-4e0d-ba4b-a190c3079038',
       fullname: 'Maria Garcia',
       company: { connect: { id: companies[0].id } },
-      departament: { connect: { id: departaments[3].id } },
+      department: { connect: { id: departments[3].id } },
     },
     {
       id: '3bcfea38-f18b-48fc-b738-3902d220dcfc',
       fullname: 'David Brown',
       company: { connect: { id: companies[3].id } },
-      departament: { connect: { id: departaments[4].id } },
+      department: { connect: { id: departments[4].id } },
     },
   ];
 

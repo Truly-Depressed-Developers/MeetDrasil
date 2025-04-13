@@ -16,6 +16,7 @@ import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import SocialLoginButtons from './socialLoginButtons';
 import { createClient } from '@/supabase/client';
+import { trpc } from '@/trpc/client';
 
 type RegisterFormProps = {
   className?: string;
@@ -27,6 +28,10 @@ export default function RegisterForm({ className }: RegisterFormProps) {
 
   const [serverMessage, setServerMessage] = useState<ServerMessage | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const { data: companies } = trpc.company.getCompanies.useQuery();
+  const { data: departments } = trpc.company.getDepartments.useQuery();
+  const addUser = trpc.user.add.useMutation();
 
   const {
     register,
@@ -42,9 +47,16 @@ export default function RegisterForm({ className }: RegisterFormProps) {
 
     setLoading(true);
 
-    const { data: loginInfo, error } = await supabase.auth.updateUser({
-      email,
-      password,
+    const { data: loginInfo, error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+    });
+
+    await addUser.mutateAsync({
+      id: loginInfo.user?.id || '',
+      name: data.name,
+      companyId: data.company,
+      departmentId: data.department,
     });
 
     const {
@@ -106,6 +118,30 @@ export default function RegisterForm({ className }: RegisterFormProps) {
               </div>
             )}
             <div className="flex flex-col gap-y-4">
+              <div className="flex flex-col gap-y-2">
+                <Label htmlFor="name">Full name</Label>
+                <Input {...register('name')} placeholder="John Doe" />
+              </div>
+              <div className="flex flex-col gap-y-2">
+                <Label htmlFor="company">Company</Label>
+                <select {...register('company')} className="rounded border p-2">
+                  {companies?.map((company) => (
+                    <option key={company.id} value={company.id}>
+                      {company.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="flex flex-col gap-y-2">
+                <Label htmlFor="department">Department</Label>
+                <select {...register('department')} className="rounded border p-2">
+                  {departments?.map((department) => (
+                    <option key={department.id} value={department.id}>
+                      {department.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
               <div className="flex flex-col gap-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input {...register('email')} placeholder="name@example.com" />
