@@ -185,7 +185,7 @@ export default function EventForm() {
           <FormLabel>Location</FormLabel>
         </div>
 
-        <div className="h-96 w-full overflow-hidden rounded-md">
+        <div className="h-96 w-full">
           <Map
             long={19.94}
             lat={50.05}
@@ -208,7 +208,7 @@ export default function EventForm() {
               'Select location on map'}
           </div>
         ) : null}
-        <div className="flex flex-col gap-4 sm:flex-row">
+        <div className="flex gap-x-4">
           <FormField
             control={form.control}
             name="startDate"
@@ -252,13 +252,13 @@ export default function EventForm() {
           </div>
 
           {isCapacityEnabled && (
-            <div className="flex flex-col gap-4 sm:flex-row">
+            <div className="flex gap-x-4">
               <FormField
                 control={form.control}
                 name="minCapacity"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel>Minimum</FormLabel>
+                    <FormLabel>Minimum Capacity</FormLabel>
                     <FormControl>
                       <Input type="number" placeholder="Event Minimum Capacity" {...field} />
                     </FormControl>
@@ -271,7 +271,7 @@ export default function EventForm() {
                 name="maxCapacity"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel>Maximum</FormLabel>
+                    <FormLabel>Maximum Capacity</FormLabel>
                     <FormControl>
                       <Input type="number" placeholder="Event Maximum Capacity" {...field} />
                     </FormControl>
@@ -302,6 +302,7 @@ export default function EventForm() {
               name="price"
               render={({ field }) => (
                 <FormItem>
+                  <FormLabel>Price</FormLabel>
                   <FormControl>
                     <Input type="number" placeholder="Event Price" {...field} />
                   </FormControl>
