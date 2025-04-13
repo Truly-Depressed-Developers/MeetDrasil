@@ -1,5 +1,12 @@
 # MeetDrasil
 
+## Motivation
+
+**MeetDrasil** was created at <a href="https://hacknarok.pl/" target="_blank">Hacknarök</a> 2025 Hackathon and won **🥈2nd place**
+
+- Topic: Połącz dziewięć światów jednym kodem
+- Timeframe: 12-13.04.2025, 24 hours
+
 ## 💼 What is MeetDrasil?
 MeetDrasil is an app designed to help employees in large companies navigate corporate life—not through another productivity tool, but by fostering real human connections.
 
@@ -11,13 +18,6 @@ The app allows employees to create and join interest-based events, hobby groups,
 
 ## 🌱 A new approach to integration and onboarding
 MeetDrasil offers a modern way to foster employee integration, especially in hybrid and distributed work environments. We support onboarding, strengthen bonds, and help build a vibrant company culture that lives beyond Slack.
-
-# Motivation
-
-**MeetDrasil** was created at <a href="https://hacknarok.pl/" target="_blank">Hacknarök</a> 2025 Hackathon.
-
-- Topic: Połącz dziewięć światów jednym kodem
-- Timeframe: 12-13.04.2025, 24 hours
 
 # Media
 
