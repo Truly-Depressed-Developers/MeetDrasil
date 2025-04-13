@@ -1,4 +1,4 @@
-import BadgeWithImage from '@/components/hobbyBadge/HobbyBadge';
+import HobbyBadge from '@/components/hobbyBadge/HobbyBadge';
 import Map from '@/components/map/Map';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -88,7 +88,7 @@ export function EventList({ events }: { events: EventDTO[] }) {
             <div className="flex flex-col sm:h-40 sm:flex-row md:h-44">
               <div className="h-36 sm:h-full sm:w-1/3">
                 <Image
-                  src={'https://placehold.co/144x144'}
+                  src={event.images.length > 0 ? event.images[0] : 'https://placehold.co/144x144'}
                   width={144}
                   height={144}
                   alt={event.name}
@@ -106,7 +106,7 @@ export function EventList({ events }: { events: EventDTO[] }) {
 
                 <div className="mb-2 flex flex-wrap gap-2">
                   {event.tags.slice(0, 2).map((tag) => (
-                    <BadgeWithImage
+                    <HobbyBadge
                       className="px-2 py-1 text-sm"
                       imageUrl={tag.image_url}
                       name={tag.name}
