@@ -26,7 +26,7 @@ model Hobby {
   name    String
   image   String
   User    User[]
-  Event   Event?  @relation(fields: [eventId], references: [id])
+  Event   Event[] 
   eventId String?
 }
 
@@ -43,9 +43,9 @@ model Event {
   longitude    Float
   startDate    DateTime
   endDate      DateTime
-  minCapacity  Int
-  maxCapacity  Int
-  price        Float
+  minCapacity  Int?
+  maxCapacity  Int?
+  price        Float?
   images       String[]
 }
 

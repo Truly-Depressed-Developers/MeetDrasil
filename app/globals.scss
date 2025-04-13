@@ -89,6 +89,26 @@
   }
 }
 
+.custom-class > *[data-ut-element='button'] {
+  @apply bg-foreground;
+  @apply text-background;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.custom-class > *[data-ut-element='button']:focus-within {
+  --tw-ring-opacity: 0 !important;
+  --tw-ring-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.custom-class > *[data-ut-element='button']::after {
+  @apply bg-background;
+  @apply text-foreground;
+}
+
 .marker-popup .maplibregl-popup-content {
   padding: 0 !important;
   overflow: hidden;

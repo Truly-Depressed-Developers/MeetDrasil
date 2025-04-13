@@ -22,22 +22,33 @@ export const eventRouter = router({
       z.object({
         name: z.string(),
         description: z.string(),
+        tags: z.array(z.string()),
         city: z.string(),
         latitude: z.number(),
         longitude: z.number(),
         startDate: z.date(),
         endDate: z.date(),
-        minCapacity: z.number(),
-        maxCapacity: z.number(),
-        price: z.number(),
-        images: z.array(z.string()),
+        minCapacity: z.number().optional(),
+        maxCapacity: z.number().optional(),
+        price: z.number().optional(),
+        images: z.array(z.string()).optional(),
       })
     )
     .mutation(async ({ input, ctx }): Promise<EventDTO> => {
       const event = await prisma.event.create({
-        data: { ...input, ownerId: ctx.user.id },
-        include: { tags: true, participants: true },
+        data: {
+          ...input,
+          ownerId: ctx.user.id,
+          tags: {
+            connect: input.tags.map((id) => ({ id })),
+          },
+        },
+        include: {
+          tags: true,
+          participants: true,
+        },
       });
+
       return mapEventToDTO(event);
     }),
   assignParticipant: protectedProcedure
