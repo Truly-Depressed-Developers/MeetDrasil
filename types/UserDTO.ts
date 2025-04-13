@@ -13,8 +13,10 @@ export interface AuthUser {
   id: string;
   email: string | undefined;
   isAnonymous: boolean | undefined;
-  companyName: string;
-  companyPlan: string;
+  company: {
+    name: string;
+    id: string;
+  } | null;
 }
 
 export function mapUserToDTO(user: User & AuthUser): UserDTO {
@@ -23,7 +25,7 @@ export function mapUserToDTO(user: User & AuthUser): UserDTO {
     name: user.fullname ?? '',
     email: user.email,
     isAnonymous: user.isAnonymous,
-    companyName: user.companyName,
-    companyPlan: user.companyPlan,
+    companyName: user.company?.name ?? '',
+    companyPlan: 'basic',
   };
 }
