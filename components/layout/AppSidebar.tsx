@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Home, MapPlus, CalendarFold, UserPen } from 'lucide-react';
+import { Home, MapPlus, UserPen } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
@@ -27,13 +27,8 @@ const items = [
     icon: MapPlus,
   },
   {
-    title: 'Your Events',
-    url: '#',
-    icon: CalendarFold,
-  },
-  {
     title: 'Your Hobbies',
-    url: 'hobby',
+    url: '/hobby',
     icon: UserPen,
   },
 ];

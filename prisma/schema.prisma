@@ -22,12 +22,11 @@ model User {
 }
 
 model Hobby {
-  id      String  @id @default(cuid())
-  name    String
-  image   String
-  User    User[]
-  Event   Event[]
-  eventId String?
+  id     String  @id @default(cuid())
+  name   String
+  image  String
+  User   User[]
+  Events Event[]
 }
 
 model Event {

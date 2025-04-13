@@ -8,6 +8,7 @@ import { Calendar, Clock, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { trpc } from '@/trpc/client';
 import { showToast } from '@/lib/showToast';
+import HobbyBadge from '../hobbyBadge/HobbyBadge';
 
 type Props = {
   id: string;
@@ -55,8 +56,16 @@ export default function EventCard({ id }: Props) {
 
   return (
     <Card className="mx-auto max-w-4xl">
-      <CardHeader>
-        <CardTitle>{event.name}</CardTitle>
+      <CardHeader className="flex flex-row flex-wrap items-center justify-between">
+        <CardTitle className="text-3xl">{event.name}</CardTitle>
+        {event.ownerId === currentUser?.id && (
+          <HobbyBadge
+            className="w-fit px-2 py-1 text-sm"
+            isActive={true}
+            imageUrl="/icons/crown.png"
+            name={'Owner'}
+          />
+        )}
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-4 md:flex-row">
@@ -65,7 +74,13 @@ export default function EventCard({ id }: Props) {
               <h2 className="text-sm font-medium text-foreground">Tags</h2>
               <div className="mt-2 flex flex-wrap gap-2">
                 {event.tags.map((tag) => (
-                  <Badge key={tag.id}>{tag.name}</Badge>
+                  <HobbyBadge
+                    className="px-2 py-1 text-sm"
+                    isActive={true}
+                    imageUrl={tag.image_url}
+                    name={tag.name}
+                    key={tag.id}
+                  />
                 ))}
               </div>
             </div>
@@ -81,7 +96,7 @@ export default function EventCard({ id }: Props) {
                   {format(new Date(event.endDate), 'HH:mm')}
                 </p>
                 <p className="flex gap-2 text-muted-foreground">
-                  <Calendar /> {format(new Date(event.startDate), 'dd.MM.yyyy')}
+                  <Calendar /> {format(new Date(event.startDate), 'MMM d, yyyy')}
                 </p>
                 <p className="flex gap-2 text-muted-foreground">
                   <MapPin /> {event.city} ({event.latitude}, {event.longitude})

@@ -2,7 +2,7 @@ import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
-type BadgeWithImageProps = {
+type HobbyBadgeProps = {
   className?: string;
   name: string;
   iconSize?: number;
@@ -10,7 +10,7 @@ type BadgeWithImageProps = {
   isActive: boolean;
 };
 
-const BadgeWithImage = ({ className, name, iconSize, imageUrl, isActive }: BadgeWithImageProps) => {
+const HobbyBadge = ({ className, name, iconSize, imageUrl, isActive }: HobbyBadgeProps) => {
   return (
     <Badge
       className={cn('rounded-full px-3 py-2 text-sm', className)}
@@ -28,4 +28,4 @@ const BadgeWithImage = ({ className, name, iconSize, imageUrl, isActive }: Badge
   );
 };
 
-export default BadgeWithImage;
+export default HobbyBadge;

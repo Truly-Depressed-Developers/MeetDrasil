@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import BadgeWithImage from '@/components/hobbyBadge/HobbyBadge';
+import HobbyBadge from '@/components/hobbyBadge/HobbyBadge';
 import { Button } from '../ui/button';
 import { trpc } from '@/trpc/client';
 import { showToast } from '@/lib/showToast';
@@ -47,7 +47,7 @@ const HobbyBadgesList = ({ hobbies, initialHobbyIds }: HobbyBadgesListProps) => 
             className="flex cursor-pointer flex-wrap items-center gap-3 rounded-full px-3 py-2"
             onClick={() => toggleHobby(hobby.id)}
           >
-            <BadgeWithImage
+            <HobbyBadge
               name={hobby.name}
               imageUrl={hobby.image_url}
               isActive={selectedHobbies.includes(hobby.id)}
