@@ -17,8 +17,8 @@ model User {
   hobbies       Hobby[]
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
-  Event         Event?       @relation(fields: [eventId], references: [id])
-  eventId       String?
+  events        Event[]      @relation("EventParticipants")
+  ownedEvents   Event[]      @relation("EventOwner")
 }
 
 model Hobby {
@@ -35,7 +35,9 @@ model Event {
   name         String
   description  String
   tags         Hobby[]
-  participants User[]
+  participants User[]   @relation("EventParticipants")
+  owner        User     @relation("EventOwner", fields: [ownerId], references: [id])
+  ownerId      String
   city         String
   latitude     Float
   longitude    Float
@@ -44,7 +46,6 @@ model Event {
   minCapacity  Int?
   maxCapacity  Int?
   price        Float?
-  ownerId      String
   images       String[]
 }
 

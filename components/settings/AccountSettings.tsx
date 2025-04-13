@@ -1,15 +1,10 @@
 import { PageSectionTitle } from '@/components/layout/PageLayout';
-import { createClient } from '@/supabase/server';
 import { AuthButton } from '@/components/auth/AuthButton';
+import { trpc } from '@/trpc/server';
 
 export default async function AccountSettings() {
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  const loggedIn = user !== null && user.is_anonymous === false;
+  const user = await trpc.user.getCurrent();
+  const loggedIn = user !== null && user.isAnonymous === false;
 
   return (
     <>
@@ -17,7 +12,10 @@ export default async function AccountSettings() {
       {loggedIn ? (
         <div className="grid grid-cols-1 gap-4">
           <span className="col-span-full text-center text-sm text-muted-foreground">
-            Logged in as <span className="text-foreground">{user.email}</span>
+            Logged in as{' '}
+            <span className="text-foreground">
+              {user.email} / {user.name}
+            </span>
           </span>
           <AuthButton path="/auth/logout" text="Log out" />
         </div>

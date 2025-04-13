@@ -51,6 +51,28 @@ export const eventRouter = router({
 
       return mapEventToDTO(event);
     }),
+  assignParticipant: protectedProcedure
+    .input(
+      z.object({
+        eventId: z.string(),
+        assigned: z.boolean(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const { eventId, assigned } = input;
+
+      const updatedEvent = await prisma.event.update({
+        where: { id: eventId },
+        data: {
+          participants: {
+            [assigned ? 'connect' : 'disconnect']: { id: ctx.user.id },
+          },
+        },
+        include: { tags: true, participants: true },
+      });
+
+      return mapEventToDTO(updatedEvent);
+    }),
   update: procedure
     .input(
       z.object({
