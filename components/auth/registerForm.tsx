@@ -124,7 +124,11 @@ export default function RegisterForm({ className }: RegisterFormProps) {
               </div>
               <div className="flex flex-col gap-y-2">
                 <Label htmlFor="company">Company</Label>
-                <select {...register('company')} className="rounded border p-2">
+                <select
+                  {...register('company')}
+                  className="rounded border p-2"
+                  defaultValue={companies && companies.length > 0 ? companies[0].id : ''}
+                >
                   {companies?.map((company) => (
                     <option key={company.id} value={company.id}>
                       {company.name}
@@ -134,7 +138,11 @@ export default function RegisterForm({ className }: RegisterFormProps) {
               </div>
               <div className="flex flex-col gap-y-2">
                 <Label htmlFor="department">Department</Label>
-                <select {...register('department')} className="rounded border p-2">
+                <select
+                  {...register('department')}
+                  className="rounded border p-2"
+                  defaultValue={departments && departments.length > 0 ? departments[0].id : ''}
+                >
                   {departments?.map((department) => (
                     <option key={department.id} value={department.id}>
                       {department.name}
