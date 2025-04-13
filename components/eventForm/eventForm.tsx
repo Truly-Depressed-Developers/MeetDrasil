@@ -326,7 +326,7 @@ export default function EventForm() {
                       'ut-uploading:cursor-not-allowed bg-white text-black border-white shadow-sm hover:bg-white/90',
                     allowedContent: 'text-white',
                   }}
-                  className="custom-class border-foreground/30 bg-foreground/10 ut-button:bg-foreground ut-button:text-background ut-allowed-content:text-foreground ut-allowed-content:text-white ut-label:text-foreground/50 hover:ut-label:text-foreground ut-uploading:ut-button:cursor-not-allowed ut-uploading:ut-button:bg-foreground/90"
+                  className="custom-class border-foreground/30 bg-foreground/10 ut-button:bg-foreground ut-button:text-background ut-allowed-content:text-foreground ut-label:text-foreground/50 hover:ut-label:text-foreground ut-uploading:ut-button:cursor-not-allowed ut-uploading:ut-button:bg-foreground/90"
                   onUploadBegin={() => {
                     setIsUploading(true);
                   }}
