@@ -10,7 +10,7 @@ import {
   SidebarGroup,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarGroupLabel,
+  useSidebar,
 } from '@/components/ui/sidebar';
 import { NavUser } from '../navUser/NavUser';
 import NavHeader from '../navHeader/NavHeader';
@@ -18,7 +18,7 @@ import NavHeader from '../navHeader/NavHeader';
 const items = [
   {
     title: 'Home',
-    url: '/events',
+    url: '/',
     icon: Home,
   },
   {
@@ -32,21 +32,26 @@ const items = [
     icon: CalendarFold,
   },
   {
-    title: 'Your Hobbys',
+    title: 'Your Hobbies',
     url: 'hobby',
     icon: UserPen,
   },
 ];
 
 const AppSidebar = () => {
+  const { setOpen } = useSidebar();
+
   return (
     <Sidebar side="right">
-      <NavHeader company={{ name: 'Fajna Firma', plan: 'Basic' }} />
+      <NavHeader />
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
           {items.map((item) => (
-            <SidebarMenuItem key={item.title} className="cursor-pointer list-none">
+            <SidebarMenuItem
+              onClick={() => setOpen(false)}
+              key={item.title}
+              className="cursor-pointer list-none"
+            >
               <SidebarMenuButton asChild>
                 <Link href={item.url}>
                   <item.icon />
@@ -58,7 +63,7 @@ const AppSidebar = () => {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={{ name: 'John Doe', email: 'johndoe@gmail.com' }} />
+        <NavUser />
       </SidebarFooter>
     </Sidebar>
   );

@@ -4,25 +4,29 @@ import { X } from 'lucide-react';
 import { SidebarHeader, useSidebar } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { getInitials } from '@/lib/utils';
+import { trpc } from '@/trpc/client';
 
-type NavHeaderProps = {
-  company: {
-    name: string;
-    plan: string;
-  };
-};
-
-const NavHeader = ({ company }: NavHeaderProps) => {
+const NavHeader = () => {
   const { setOpen } = useSidebar();
+  const { data: user, isLoading } = trpc.user.getCurrent.useQuery();
+
+  if (isLoading) {
+    return null;
+  }
+
+  if (!user) {
+    return null;
+  }
+
   return (
-    <SidebarHeader className="flex flex-row justify-between">
+    <SidebarHeader className="flex flex-row justify-between p-4">
       <div className="flex items-center gap-2">
         <Avatar className="size-8">
-          <AvatarFallback className="rounded-lg">{getInitials(company.name)}</AvatarFallback>
+          <AvatarFallback className="rounded-lg">{getInitials(user.companyName)}</AvatarFallback>
         </Avatar>
         <div className="grid flex-1 text-left text-sm leading-tight">
-          <span className="truncate font-semibold">{company.name}</span>
-          <span className="truncate text-xs">{company.plan}</span>
+          <span className="truncate font-semibold">{user.companyName}</span>
+          <span className="truncate text-xs">{user.companyPlan}</span>
         </div>
       </div>
       <div

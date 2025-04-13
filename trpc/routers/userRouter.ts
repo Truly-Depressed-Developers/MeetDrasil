@@ -7,10 +7,13 @@ export const userRouter = router({
     const { user: authUser } = ctx;
     const dbUser = await prisma.user.findUnique({
       where: { id: authUser.id },
+      include: {
+        company: true,
+      },
     });
 
     if (!dbUser) {
-      throw new Error('User not found');
+      throw new Error('User not found in database');
     }
 
     const user = {
