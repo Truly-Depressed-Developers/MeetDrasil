@@ -1,6 +1,6 @@
-@use "tailwindcss/base";
-@use "tailwindcss/components";
-@use "tailwindcss/utilities";
+@use 'tailwindcss/base';
+@use 'tailwindcss/components';
+@use 'tailwindcss/utilities';
 
 @layer base {
   :root {
@@ -69,6 +69,26 @@
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply bg-background font-sans text-foreground antialiased;
   }
+}
+
+.custom-class > *[data-ut-element='button'] {
+  @apply bg-foreground;
+  @apply text-background;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.custom-class > *[data-ut-element='button']:focus-within {
+  --tw-ring-opacity: 0 !important;
+  --tw-ring-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.custom-class > *[data-ut-element='button']::after {
+  @apply bg-background;
+  @apply text-foreground;
 }

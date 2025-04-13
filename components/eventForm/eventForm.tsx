@@ -27,6 +27,8 @@ import { Switch } from '@/components/ui/switch';
 import { trpc } from '@/trpc/client';
 import { showToast } from '@/lib/showToast';
 import { redirect } from 'next/navigation';
+import { UploadDropzone } from '../uploadthing/uploadthing';
+import EventFormImages from './eventFormImages';
 
 const formSchema = z
   .object({
@@ -59,6 +61,7 @@ const formSchema = z
 export default function EventForm() {
   const [isCapacityEnabled, setIsCapacityEnabled] = useState(false);
   const [isPriceEnabled, setIsPriceEnabled] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   const hobbies = trpc.hobby.getAll.useQuery();
   const mutation = trpc.event.create.useMutation();
@@ -229,7 +232,7 @@ export default function EventForm() {
 
         <div className="space-y-2">
           <div className="flex items-center gap-x-4">
-            <FormLabel className="text-base">Capacity</FormLabel>
+            <FormLabel>Capacity</FormLabel>
             <label className="flex items-center gap-x-2 text-sm">
               <Switch
                 checked={isCapacityEnabled}
@@ -276,7 +279,7 @@ export default function EventForm() {
 
         <div className="space-y-2">
           <div className="flex items-center gap-x-4">
-            <FormLabel className="text-base">Price</FormLabel>
+            <FormLabel>Price</FormLabel>
             <label className="flex items-center gap-x-2 text-sm">
               <Switch
                 checked={isPriceEnabled}
@@ -305,7 +308,43 @@ export default function EventForm() {
           )}
         </div>
 
-        <Button type="submit" className="w-full">
+        <FormField
+          control={form.control}
+          name="images"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Images</FormLabel>
+              <FormControl>
+                <UploadDropzone
+                  endpoint="imageUploader"
+                  appearance={{
+                    button:
+                      'ut-uploading:cursor-not-allowed bg-white text-black border-white shadow-sm hover:bg-white/90',
+                    allowedContent: 'text-white',
+                  }}
+                  className="custom-class ut-allowed-content:text-foreground ut-label:text-foreground/50 hover:ut-label:text-foreground ut-button:bg-foreground ut-button:text-background ut-allowed-content:text-white ut-uploading:ut-button:cursor-not-allowed ut-uploading:ut-button:bg-foreground/90 border-foreground/30 bg-foreground/10"
+                  onUploadBegin={() => {
+                    setIsUploading(true);
+                  }}
+                  onClientUploadComplete={(res) => {
+                    const urls = [...(field.value || []), ...res.map((file) => file.ufsUrl)];
+                    field.onChange(urls);
+                    showToast({ title: 'Upload Completed' });
+                    setIsUploading(false);
+                  }}
+                  onUploadError={(error: Error) => {
+                    showToast({ title: 'Upload error', description: error.message });
+                    setIsUploading(false);
+                  }}
+                />
+              </FormControl>
+              <FormMessage />
+              <EventFormImages imageUrls={field.value} />
+            </FormItem>
+          )}
+        />
+
+        <Button type="submit" className="w-full" disabled={isUploading || !form.formState.isValid}>
           Create Event
         </Button>
       </form>
