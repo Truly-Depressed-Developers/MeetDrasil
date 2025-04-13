@@ -10,7 +10,6 @@
     "ts:check": "tsc",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "prepare": "husky",
     "push": "prisma db push",
     "reset": "prisma migrate reset",
     "migrate:new": "prisma migrate dev --name",
