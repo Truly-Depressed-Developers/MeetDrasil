@@ -26,7 +26,7 @@ const EventPage = async () => {
           <Map long={19.94} lat={50.05} markers={markers} />
         </div>
       </div>
-      <div className="max-h-screen w-full overflow-scroll p-4 md:w-1/2">
+      <div className="max-h-screen w-full overflow-scroll overflow-x-hidden p-6 md:w-1/2">
         <div className="w-full">
           <Tabs defaultValue="events">
             <TabsList className="mb-4 grid w-full grid-cols-3">
